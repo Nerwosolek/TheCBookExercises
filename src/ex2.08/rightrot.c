@@ -13,7 +13,7 @@ rightrot(unsigned x, int n)
     for (size_t i = 0; i < n; i++)
     {
         carry = x & mask;
-        x = x >> 1;
+        x >>= 1;
         x += sig1 * carry;
     }
     return x;
