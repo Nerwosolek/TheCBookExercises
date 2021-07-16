@@ -1,0 +1,5 @@
+I would test the edge cases:
+a) when there is no line, no word or no characters
+b) when there is no specific delimeter characters
+c) when there is more than one in a row of delim character
+I would test regular cases with different number of lines, words and chars.
