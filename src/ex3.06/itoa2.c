@@ -4,10 +4,7 @@ void
 itoa2 (int n, char s[], int l)
 {
     int i, sign;
-    if (n < 0)
-        sign = -1;
-    else
-        sign = 1;
+    sign = (n < 0) ? -1 : 1;
     i = 0;
     do {
         s[i++] = sign * (n % 10) + '0';
