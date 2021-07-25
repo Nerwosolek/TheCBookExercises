@@ -7,6 +7,7 @@
 int getop(char []);
 void push(double);
 double pop(void);
+double top(void);
 
 int
 main(void)
@@ -47,6 +48,9 @@ main(void)
                 else
                     printf("error: zero divisor\n");
                 break;
+            case 'p':
+                printf("\t%.8g\n", top());
+                break;
             case '\n':
                 printf("\t%.8g\n", pop());
                 break;
@@ -81,6 +85,18 @@ double pop(void)
         printf("error: stack empty\n");
         return 0.0;
     }
+}
+
+double top(void)
+{
+    if (sp > 0)
+        return val[sp-1];
+    else
+    {
+        printf("error: stack empty\n");
+        return 0.0;
+    }
+    
 }
 
 #include<ctype.h>
