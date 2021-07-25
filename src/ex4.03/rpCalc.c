@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 
 #define MAXOP 100
 #define NUMBER '0'
@@ -48,8 +49,18 @@ main(void)
                 else
                     printf("error: zero divisor\n");
                 break;
-            case 'p':
+            case '@':
                 printf("\t%.8g\n", top());
+                break;
+            case 's':
+                push(sin(pop()));
+                break;
+            case 'e':
+                push(exp(pop()));
+                break;
+            case 'p':
+                op2 = pop();
+                push(pow(pop(), op2));
                 break;
             case '\n':
                 printf("\t%.8g\n", pop());
