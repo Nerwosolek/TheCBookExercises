@@ -5,6 +5,7 @@
 #define MAXOP 100
 #define NUMBER '0'
 #define VAR '$'
+#define PRINT_VAR '$'
 #define ADDRESS '@'
 #define PRINT '?'
 #define SINUS 's'
@@ -15,7 +16,7 @@ int getop(char []);
 void push(double);
 double pop(void);
 double top(void);
-double vars[26];
+double vars[27];
 int address(char);
 
 int
@@ -41,6 +42,7 @@ main(void)
                 break;
             case PRINT:
                 printf("\t%.8g\n", top());
+                vars[address(PRINT_VAR)] = top();
                 break;
             case '+':
                 push(pop() + pop());
@@ -131,6 +133,7 @@ double top(void)
 
 int address(char v)
 {
+    if (v == '$') return 26;
     if (v < 'a') return 0;
     if (v > 'z') return 'z' - 'a';
     return v - 'a';
