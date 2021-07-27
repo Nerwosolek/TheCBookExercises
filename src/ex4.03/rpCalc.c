@@ -150,12 +150,7 @@ int getop(char s[])
     s[1] = '\0';
     if (!isdigit(c) && c != '.')
         {
-            if (c == VAR) 
-            {
-                s[0] = getch();
-                s[1] = '\0';
-            }
-            else if (c == ADDRESS)
+            if (c == VAR || c == ADDRESS) 
             {
                 s[0] = getch();
                 s[1] = '\0';
