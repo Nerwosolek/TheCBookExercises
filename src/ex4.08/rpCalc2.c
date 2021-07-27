@@ -1,4 +1,4 @@
-// This will cover exercises 4-3 to 4-7
+// This will cover exercises 4-8 to 4-9
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
@@ -27,7 +27,7 @@ main(void)
     double op2;
     int op_int;
     char s[MAXOP];
-
+    
     while((type = getop(s)) != EOF)
     {
         switch(type)
@@ -149,7 +149,7 @@ void ungets(char[]);
 int getop(char s[])
 {
     int i, c;
-
+    ungetch(EOF);
     while ((s[0] = c = getch()) == ' ' || c == '\t')
         ;
     s[1] = '\0';
@@ -175,7 +175,7 @@ int getop(char s[])
     return NUMBER;
 }
 
-char buf;
+int buf;
 
 int getch(void)
 {
