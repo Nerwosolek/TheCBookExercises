@@ -4,11 +4,19 @@
 
 #define MAXOP 100
 #define NUMBER '0'
+#define VAR '$'
+#define ADDRESS '@'
+#define PRINT '?'
+#define SINUS 's'
+#define POWER 'p'
+#define EXP 'e'
 
 int getop(char []);
 void push(double);
 double pop(void);
 double top(void);
+double vars[26];
+int address(char);
 
 int
 main(void)
@@ -24,6 +32,15 @@ main(void)
         {
             case NUMBER:
                 push(atof(s));
+                break;
+            case VAR:
+                push(vars[address(s[0])]);
+                break;
+            case ADDRESS:
+                push(address(s[0]));
+                break;
+            case PRINT:
+                printf("\t%.8g\n", top());
                 break;
             case '+':
                 push(pop() + pop());
@@ -49,18 +66,20 @@ main(void)
                 else
                     printf("error: zero divisor\n");
                 break;
-            case '@':
-                printf("\t%.8g\n", top());
-                break;
-            case 's':
+            case SINUS:
                 push(sin(pop()));
                 break;
-            case 'e':
+            case EXP:
                 push(exp(pop()));
                 break;
-            case 'p':
+            case POWER:
                 op2 = pop();
                 push(pow(pop(), op2));
+                break;
+            case '=':
+                op2 = pop();
+                vars[(int)pop()] = op2;
+                push(op2); // new value of variable pushed on stack for having it as a part of expression.
                 break;
             case '\n':
                 printf("\t%.8g\n", pop());
@@ -110,6 +129,13 @@ double top(void)
     
 }
 
+int address(char v)
+{
+    if (v < 'a') return 0;
+    if (v > 'z') return 'z' - 'a';
+    return v - 'a';
+}
+
 #include<ctype.h>
 
 int getch(void);
@@ -123,7 +149,19 @@ int getop(char s[])
         ;
     s[1] = '\0';
     if (!isdigit(c) && c != '.')
-        return c;
+        {
+            if (c == VAR) 
+            {
+                s[0] = getch();
+                s[1] = '\0';
+            }
+            else if (c == ADDRESS)
+            {
+                s[0] = getch();
+                s[1] = '\0';
+            }
+            return c;
+        }
     i = 0;
     if (isdigit(c))
         while (isdigit(s[++i] = c = getch()))
