@@ -1,3 +1,4 @@
+// This will cover exercises 4-3 to 4-7
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
@@ -143,6 +144,7 @@ int address(char v)
 
 int getch(void);
 void ungetch(int);
+void ungets(char[]);
 
 int getop(char s[])
 {
@@ -189,4 +191,17 @@ void ungetch(int c)
         printf("ungetch: too many characters\n");
     else
         buf[bufp++] = c;
+}
+
+void ungets(char s[]) // we have to pushback chars in reverse order to get in correct order when getting it again
+{
+    int i = 0;
+    for (;s[i] != '\0' ; i++) // going to the end of string s
+        ;
+    --i;
+    for(;i>=0;i--)
+    {
+        ungetch(s[i]);
+    }
+    
 }
