@@ -85,7 +85,7 @@ main(void)
                 push(op2); // new value of variable pushed on stack for having it as a part of expression.
                 break;
             case '\n':
-                printf("\t%.8g\n", pop());
+                printf("\t%.9g\n", pop());
                 break;
             default:
                 printf("error: unknown command %s\n", s);
@@ -143,14 +143,23 @@ int address(char v)
 #include<ctype.h>
 
 int getch(void);
-void ungetch(int);
-void ungets(char[]);
 
 int getop(char s[])
 {
-    int i, c;
-    while ((s[0] = c = getch()) == ' ' || c == '\t')
-        ;
+    int i;
+    int c;
+    static int prevc = 0;
+    // printf(" %i", prevc);
+    if (prevc == 0)
+    {
+        c = getch();
+    }
+    else {
+        c = prevc;
+        prevc = 0;
+    }
+    while ((s[0] = c) == ' ' || c == '\t')
+        c = getch();
     s[1] = '\0';
     if (!isdigit(c) && c != '.')
         {
@@ -170,7 +179,7 @@ int getop(char s[])
             ;
     s[i] = '\0';
     if (c != EOF)
-        ungetch(c);
+        prevc = c;
     return NUMBER;
 }
 
@@ -185,12 +194,4 @@ int getch(void)
         return temp;
     }
     return getchar();
-}
-
-void ungetch(int c)
-{
-    if (buf != '\0')
-        printf("ungetch: pushed back character already exists\n");
-    else
-        buf = c;
 }
